@@ -101,10 +101,12 @@ return(graph)
 
 }
 
-#' @title csvToXts
+#' @title dataToXts
 #' @description convert csv to xts format to use dygraph function
-#' @param compileFile csv file (specific format)
-#' @param variableName String of variable code into compileFile (ex. "WTD")
+#' @param compileFile data.frame (specific format, add some test ?)
+#' @param variableName String of variable code into compileFile (ex. "WTD", or c("WTD","TS_1_1_1"))
+#' @param timestampColumn String of the timestampColumn with year, month, day, hour month and second(ex. "timestamp")
+#' @param timestampFormat String of the timestampColumn format with year, month, day, hour month and second(ex. "%Y-%m-%d %H:%M:%S")
 #' @importFrom  data.table setDT
 #' @importFrom  data.table setkey
 #' @importFrom reshape melt
@@ -114,21 +116,30 @@ return(graph)
 #' @examples 
 #' compileFilePath <- system.file("extdata","compilation/Compile_lgt_bm1_2020.csv", package = "toolboxMeteosol")
 #' compileFile <- read.csv(compileFilePath,header=TRUE,sep=";")
+#' timestampColumn <- "timestamp"
+#' timestampFormat <- "%Y-%m-%d %H:%M:%S" 
 #' variableName <- c("TS_1_1_1","TS_1_2_1")
-#' csvToXts(compileFile,variableName)
+#' dataToXts(compileFile,variableName,timestampColumn,timestampFormat)
 #' @export
 
-csvToXts <- function(compileFile,variableName){
+dataToXts <- function(compileFile,variableName,timestampColumn,timestampFormat){
   attr(ts, "tzone") <- "Africa/Algiers"
   Sys.setenv(TZ = "Africa/Algiers")
 
-  setDT(compileFile)
-  # Date configuration
-  compileFile$timestamp <- as.POSIXct(compileFile$timestamp,"%Y-%m-%d %H:%M:%S",tz='Africa/Algiers')
+  # Test file
+  test_that(desc = paste0("---Test file structure---"), code = {
+    expect_true(nrow(compileFile)>0)
+    expect_true(ncol(compileFile)>0)
+  })
 
-  if(nrow(compileFile)==0){
-    stop("no data into file")
-  }else{}
+  setDT(compileFile)
+
+  # Date configuration
+  compileFile[,timestamp:=as.POSIXct(compileFile[,(timestampColumn),with=FALSE][[1]],timestampFormat,tz='Africa/Algiers')]
+
+  test_that(desc = paste0("---Test date configuration---"), code = {
+    expect_true(!is.na(compileFile[1,timestamp]))
+  })
 
   dateWindow <- c(min(compileFile$timestamp),max(compileFile$timestamp))
   fullSequence <- seq(min(compileFile$timestamp),max(compileFile$timestamp),by="30 min")
@@ -139,15 +150,14 @@ csvToXts <- function(compileFile,variableName){
   setkey(meltDataCompile, variable)
 
   dataxts <- do.call("cbind",lapply(variableName,function(z){
-  outp <- meltDataCompile[variable %in% z,]   
-  
-  # Génération de la time serie pour toutes les variables
-  tmp <-  outp[,list(timestamp,value)]
-  tmp2 <- setDT(data.frame(Date=fullSequence,with(tmp,tmp[match(fullSequence,tmp$timestamp),])))
-  db <- xts(tmp2[,value],order.by=tmp2[,timestamp])
-  colnames(db) <- z
-  db
-  })
+    outp <- meltDataCompile[variable %in% z,]   
+    # Génération de la time serie pour toutes les variables
+    tmp <-  outp[,list(timestamp,value)]
+    tmp2 <- setDT(data.frame(Date=fullSequence,with(tmp,tmp[match(fullSequence,tmp$timestamp),])))
+    db <- xts(tmp2[,value],order.by=tmp2[,Date])
+    colnames(db) <- z
+    db
+    })
   )
 
 return(dataxts)
