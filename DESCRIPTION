@@ -1,0 +1,24 @@
+Package: toolboxMeteosol
+Title: Functions for processing raw files from biometeorological stations of SNO-Tourbières
+Version: 1.0
+Authors@R: 
+    person(given = "Jean-Baptiste",
+           family = "Paroissien",
+           role = c("aut", "cre"),
+           email = "jean-baptiste.paroissien@cnrs-orleans.fr",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Functions for processing raw files from biometeorological stations of SNO-Tourbieres.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    data.table,
+    lubridate,
+    testthat,
+    dygraphs,
+    reshape,
+    xts,
+    wesanderson
