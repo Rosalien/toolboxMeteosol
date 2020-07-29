@@ -1,7 +1,9 @@
->> toolboxMeteosol package
+> toolboxMeteosol R-package
 
-# Install
+Functions for processing raw files from biometeorological station
+
+# Installation
 
 ```{r}
-install_github("Rosalien/toolboxMeteosol")
+devtools::install_github("Rosalien/toolboxMeteosol")
 ```

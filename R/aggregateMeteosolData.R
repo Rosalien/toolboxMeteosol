@@ -14,7 +14,7 @@
 aggregateMeteosolData <- function(dataMeteosol){
 
 	# Test name file structure
-	test_that(desc = "Test name file structure", code = {
+	test_that(desc = paste0("Test name file structure of ",dataMeteosol), code = {
 		expect_true(substr(basename(dataMeteosol),1,2)=="FR")
 		expect_true(substr(basename(dataMeteosol),4,6) %in% c("LGT","BDZ","FRN","LDM"))
 		expect_true(substr(basename(dataMeteosol),8,10) %in% c("001","002","003","004","005"))
@@ -22,7 +22,6 @@ aggregateMeteosolData <- function(dataMeteosol){
 		expect_true(as.numeric(substr(basename(dataMeteosol),12,13)) >= 0 & as.numeric(substr(basename(dataMeteosol),12,13)) < 40)
 		expect_true(nchar(substr(basename(dataMeteosol),15,17))== 3)
 		expect_true(as.numeric(substr(basename(dataMeteosol),15,17)) >= 1 & as.numeric(substr(basename(dataMeteosol),12,13)) < 366)
-		expect_true(substr(basename(dataMeteosol),19,22)== "0000")
 	})
 
 	# Read file
@@ -46,7 +45,7 @@ aggregateMeteosolData <- function(dataMeteosol){
 	is.na(data_brute) <- data_brute==-9999
 
 	# Test structure file
-	test_that(desc = "Test file structure", code = {
+	test_that(desc = paste0("Test file structure of ",dataMeteosol), code = {
     	expect_true(colnames(data_brute[,1])=="DATE")
     	expect_true(nchar(format(data_brute[1,1],scientific=FALSE))==14)
 	})
