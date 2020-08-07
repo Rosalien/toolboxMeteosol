@@ -28,7 +28,6 @@ csvToSimpleDygraph <- function(compileFile,variableName){
     stop("no data into file")
   }else{}
 
-  # Partie à optimiser
   meltDataCompile <- setDT(reshape::melt(compileFile,id=1:3,na.rm=TRUE))
   is.na(meltDataCompile$value) <- meltDataCompile$value==-9999  
   meltDataCompile$variable <- as.character(meltDataCompile$variable)
@@ -84,7 +83,7 @@ csvToDygraph <- function(compileFile,variableName){
   dataxts <- do.call("cbind",lapply(variableName,function(z){
   outp <- meltDataCompile[variable %in% z,]   
   
-  # Génération de la time serie pour toutes les variables
+  # Time series for all variables
   tmp <-  outp[,list(timestamp,value)]
   tmp2 <- setDT(data.frame(Date=fullSequence,with(tmp,tmp[match(fullSequence,tmp$timestamp),])))
   db <- xts(tmp2[,value],order.by=tmp2[,timestamp])
@@ -157,7 +156,7 @@ dataToXts <- function(compileFile,variableName,timestampColumn,timestampFormat){
 
   dataxts <- do.call("cbind",lapply(variableName,function(z){
     outp <- meltDataCompile[variable %in% z,]   
-    # Génération de la time serie pour toutes les variables
+    # Time series for all variables
     tmp <-  outp[,list(timestamp,value)]
     tmp2 <- setDT(data.frame(Date=fullSequence,with(tmp,tmp[match(fullSequence,tmp$timestamp),])))
     db <- xts(tmp2[,value],order.by=tmp2[,Date])
