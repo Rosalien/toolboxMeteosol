@@ -1,9 +1,16 @@
-> toolboxMeteosol R-package
+# toolboxMeteosol
 
-Functions for processing raw files from biometeorological station
+<!-- badges: start -->
+[![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+<!-- badges: end -->
 
-# Installation
+R-package for processing raw files from biometeorological station of [SNO-Tourbières](https://www.sno-tourbieres.cnrs.fr/)
 
-```{r}
+## Installation
+
+You can install the released version of toolboxMeteosol with:
+
+```r
 devtools::install_github("Rosalien/toolboxMeteosol")
 ```
+

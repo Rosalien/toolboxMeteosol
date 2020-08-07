@@ -15,11 +15,11 @@ soilHeatFluxCalcul(
 \arguments{
 \item{data_brute}{data.table}
 
-\item{SWC_variable}{string vector of SWC variable}
+\item{SWC_variable}{string vector of SWC variable (ex. SWC_1_1_1)}
 
-\item{G_variable}{string vector of Gvariable}
+\item{G_variable}{string vector of Gvariable (ex. G_1_1_1)}
 
-\item{Gqf_variable}{string vector of Gqf variable}
+\item{Gqf_variable}{string vector of Gqf variable ()}
 
 \item{Esen_variable}{string vector of Esen variable}
 }

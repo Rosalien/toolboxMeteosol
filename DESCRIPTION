@@ -8,7 +8,7 @@ Authors@R:
            email = "jean-baptiste.paroissien@cnrs-orleans.fr",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: Functions for processing raw files from biometeorological stations of SNO-Tourbieres.
-License: GPL-3
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

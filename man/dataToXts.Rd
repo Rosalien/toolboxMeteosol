@@ -22,7 +22,9 @@ xts object to used with dygraph with all variable selected ()
 convert csv to xts format to use dygraph function
 }
 \examples{
-compileFilePath <- system.file("extdata","compilation/Compile_lgt_bm1_2020.csv", package = "toolboxMeteosol")
+compileFilePath <- system.file("extdata",
+"compilation/Compile_lgt_bm1_2020.csv",
+package = "toolboxMeteosol")
 compileFile <- read.csv(compileFilePath,header=TRUE,sep=";")
 timestampColumn <- "timestamp"
 timestampFormat <- "\%Y-\%m-\%d \%H:\%M:\%S" 

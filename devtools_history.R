@@ -10,5 +10,5 @@ usethis::use_package("wesanderson") # for color palette
 
 # Ignore these files
 usethis::use_build_ignore("devtools_history.R")
-usethis::use_build_ignore("Readme.R")
+usethis::use_build_ignore("Readme.md")
 

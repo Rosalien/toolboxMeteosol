@@ -7,15 +7,15 @@
 soilWaterConcentCalcul(data_brute, SWC_variable, Pe_variable)
 }
 \arguments{
-\item{data_brute}{data.table}
+\item{data_brute}{data.table with SWC and Pe variables}
 
-\item{SWC_variable}{string vector of SWC variable}
+\item{SWC_variable}{string vector of SWC variables (ex. SWC_X_X_X)}
 
-\item{Pe_variable}{string vector of Pe variable}
+\item{Pe_variable}{string vector of Pe variables (ex. Pe_X_X_X)}
 }
 \value{
-Retourne une data.table meteosol semi-horaire
+data.table with SWC values
 }
 \description{
-Contrôle qualité d'une data.table
+Soil Water Content calculation on a data.table with SWC and PE variable
 }

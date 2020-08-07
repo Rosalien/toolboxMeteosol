@@ -18,7 +18,9 @@ html time trend with dygraph with all variable selected ()
 Complex dygraph visualization from csv timeseries
 }
 \examples{
-compileFilePath <- system.file("extdata","compilation/Compile_lgt_bm1_2020.csv", package = "toolboxMeteosol")
+compileFilePath <- system.file("extdata",
+"compilation/Compile_lgt_bm1_2020.csv",
+package = "toolboxMeteosol")
 compileFile <- read.csv(compileFilePath,header=TRUE,sep=";")
 variableName <- c("TS_1_1_1","TS_1_2_1")
 csvToDygraph(compileFile,variableName)

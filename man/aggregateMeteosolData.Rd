@@ -4,10 +4,10 @@
 \alias{aggregateMeteosolData}
 \title{aggregateMeteosolData}
 \usage{
-aggregateMeteosolData(dataMeteosol)
+aggregateMeteosolData(rawFilePath)
 }
 \arguments{
-\item{dataMeteosol}{Complete file path of raw file from biometeorological station of SNO-Tourbières (ex. "/home/jbparoissien/SI_SNOT/processMeteoSol/inst/extdata/FR_LGT_001_20_036_0000.csv"). Need to respect format presented \href{https://sourcesup.renater.fr/www/si-snot/3.1_Sce_meteosol.html}{here}}
+\item{rawFilePath}{Complete file path of raw file from biometeorological station of SNO-Tourbières (ex. "/home/jbparoissien/SI_SNOT/processMeteoSol/inst/extdata/FR_LGT_001_20_036_0000.csv"). Need to respect format presented \href{https://sourcesup.renater.fr/www/si-snot/3.1_Sce_meteosol.html}{here}}
 }
 \value{
 data.table meteosol semi-hourly
@@ -16,6 +16,8 @@ data.table meteosol semi-hourly
 Elaborated variable calculation, quality control and semi-hourly average for raw data from biometeorological station of SNO-Tourbières
 }
 \examples{
-dataMeteosol <- system.file("extdata","FR_LGT_001_20_036_0000.csv",package = "toolboxMeteosol")
-aggregateMeteosolData(system.file("extdata","FR_LGT_001_20_036_0000.csv",package = "toolboxMeteosol"))
+rawFilePath <- system.file("extdata",
+"FR_LGT_001_20_036_0000.csv",
+package = "toolboxMeteosol")
+aggregateMeteosolData(rawFilePath)
 }

@@ -57,7 +57,7 @@ lapply(unique(yearsToIntegrate),function(x){
   
   aggregateData <- rbindlist(lapply(1:nbrListFileByYears,function(y){
     setTxtProgressBar(pb, y)
-    aggregateMeteosolData(dataMeteosol=ListFileByYears[y])
+    aggregateMeteosolData(rawFilePath=ListFileByYears[y])
   }))
   close(pb)
   
@@ -66,18 +66,19 @@ lapply(unique(yearsToIntegrate),function(x){
   
   # Average 30min
   data_semiHour <- aggregateData[,lapply(.SD,mean,na.rm=TRUE),by=c("timestamp","date","time"),.SDcols=colSNOT[grepl("P_1_1_1",colSNOT)==FALSE]]
-
   if(length(unique(grepl("P_1_1_1",colSNOT)))>1){
     data_semiHour[,P_1_1_1 := aggregateData[,lapply(.SD,sum,na.rm=TRUE),by=c("timestamp","date","time"),.SDcols=colSNOT[grepl("P_1_1_1",colSNOT)==TRUE]][,P_1_1_1]]	
   }else{}
   
   # Formatage 
   ## Convert Na to -9999
-  data_semiHour[is.na(data_semiHour)] <- "-9999" 
-  
-  # WTD calculation 
+  # data_semiHour[is.na(data_semiHour)] <- "-9999" 
+  # Na in -9999 (much faster than solutions https://stackoverflow.com/questions/7235657/fastest-way-to-replace-nas-in-a-large-data-table)
+  is.na(data_semiHour) <- data_semiHour==-9999
+
+  # WTD calculation (add a parameter for hRef?)
   if(colnames(data_semiHour)[colnames(data_semiHour)=="WTD"]=="WTD"){
-      # Valeur du coef pour calculer la WTD
+      # Coef value to calculate WTD
       hRef <- 0.41
       data_semiHour[,WTD:=(WTD-hRef)/100]
   }else{}
@@ -96,7 +97,7 @@ lapply(unique(yearsToIntegrate),function(x){
     write.table(data_semiHour,nomCompileFile,row.names=FALSE,col.names=TRUE,qmethod="escape",sep=";",fileEncoding = "UTF8")
   }
   
-  # save file to integrate to data-snot.cnrs-orleans.fr
+  # save file to integrate to data-snot.cnrs.fr
   buildSNOTFile(dataSNOT=data_semiHour[,-"timestamp"],theme="meteosol",frequence="infra-journalier",
            site=Site,station=Station,datatype="meteosol_infraj",
            minDate=minDate,maxDate=maxDate,repsortie=repOut)
