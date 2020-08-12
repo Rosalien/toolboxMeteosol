@@ -68,7 +68,7 @@ readRawFilesBM <- function(rawFilePath){
 	# Date format and duplicated
 	test_that(desc = paste0("Date format and duplicated test of ",rawFilePath), code = {
     	expect_true(unique(!is.na(data_brute$DATE)))
-    	expect_true(unique(!duplicated(data_brute$DATE)))
+    	#expect_true(unique(!duplicated(data_brute$DATE)))
 	})
 
 	return(data_brute)
